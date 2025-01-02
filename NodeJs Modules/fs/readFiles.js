@@ -1,4 +1,4 @@
-import fs, { read } from "fs"
+import fs, { read } from "fs";
 
 /* 
 .read() :- use for server-side scripting 
@@ -6,11 +6,7 @@ import fs, { read } from "fs"
     - syntax :- fs.read(fd,buffer,offset,length, position,callback)
 */
 
-// buffer 
-const buffer = Buffer.alloc(1024);
-
-// optimize 
-const stats = fs.statSync("./file.txt") // provide the file / directory information synchronusly
+const stats = fs.statSync("./file.txt"); // provide the file / directory information synchronusly
 // console.log(stats);
 // buffer = Buffer.alloc(stats.size) // good way
 /*
@@ -53,24 +49,24 @@ Stats {
  syntax:- fs.close( fd, callback )
 */
 fs.open("./file.txt", "r", (err, fd) => {
-    if (err) return console.error(err)
-    console.log("file is open, Now Reading...");
+  if (err) return console.error(err);
+  console.log("file is open, Now Reading...");
 
-    const buffer = Buffer.alloc(1024);
+  const buffer = Buffer.alloc(1024);
 
-    fs.read(fd, buffer, 0, buffer.length, 0, (err, bytesRead) => {
-        if (err) return console.error("Error while Reading", err)
-        if (bytesRead > 0) {
-            console.log(`Bytes reads ${bytesRead}`);
-            console.log(`Content:\n${buffer.toString('utf8', 0, bytesRead)}`);
-        }
+  fs.read(fd, buffer, 0, buffer.length, 0, (err, bytesRead) => {
+    if (err) return console.error("Error while Reading", err);
+    if (bytesRead > 0) {
+      console.log(`Bytes reads ${bytesRead}`);
+      console.log(`Content:\n${buffer.toString("utf8", 0, bytesRead)}`);
+    }
 
-        // close callback take 1 args --> err
-        fs.close(fd, (err) => {
-            if (err) {
-                console.log(err);
-            }
-            console.log("File closed successfully");
-        })
-    })
-})
+    // close callback take 1 args --> err
+    fs.close(fd, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("File closed successfully");
+    });
+  });
+});
