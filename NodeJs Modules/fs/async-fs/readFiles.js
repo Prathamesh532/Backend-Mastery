@@ -48,25 +48,40 @@ Stats {
  fs.close() method is used to asynchronously close the given file descriptor
  syntax:- fs.close( fd, callback )
 */
-fs.open("./file.txt", "r", (err, fd) => {
-  if (err) return console.error(err);
-  console.log("file is open, Now Reading...");
 
-  const buffer = Buffer.alloc(1024);
+const fileOperation = () => {
+  fs.open("./file.txt", "r", (err, fd) => {
+    if (err) return console.error(err);
+    console.log("file is open, Now Reading...");
 
-  fs.read(fd, buffer, 0, buffer.length, 0, (err, bytesRead) => {
-    if (err) return console.error("Error while Reading", err);
-    if (bytesRead > 0) {
-      console.log(`Bytes reads ${bytesRead}`);
-      console.log(`Content:\n${buffer.toString("utf8", 0, bytesRead)}`);
-    }
+    const buffer = Buffer.alloc(1024);
 
-    // close callback take 1 args --> err
-    fs.close(fd, (err) => {
-      if (err) {
-        console.log(err);
+    fs.read(fd, buffer, 0, buffer.length, 0, (err, bytesRead) => {
+      if (err) return console.error("Error while Reading", err);
+      if (bytesRead > 0) {
+        console.log(`Bytes reads ${bytesRead}`);
+        console.log(`Content:\n${buffer.toString("utf8", 0, bytesRead)}`);
       }
-      console.log("File closed successfully");
+
+      // close callback take 1 args --> err
+      fs.close(fd, (err) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log("File closed successfully");
+      });
     });
   });
-});
+}
+
+
+// fs.readFile
+// syntax:- fs.readFile(path, encoding(optional), callback(err,data))
+
+fs.readFile("./file.txt", "utf8", (err, data) => {
+  if (err) return err
+  console.log("reading file");
+  console.log(data);
+
+})
+

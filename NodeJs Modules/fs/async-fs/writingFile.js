@@ -46,4 +46,10 @@ const writingInFile = () => {
   }
 };
 
-writingInFile();
+// writingInFile();
+// syntax
+const data = "\nhello from fs.readFile()"
+fs.writeFile("./file.txt", data, "utf8", (err, buffer) => {
+  if (err) return err
+  console.log(`The data is added ${data}`);
+})
